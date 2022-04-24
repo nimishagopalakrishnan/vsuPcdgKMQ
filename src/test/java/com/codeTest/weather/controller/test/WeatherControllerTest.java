@@ -90,6 +90,10 @@ public class WeatherControllerTest {
 		result =  weatherController.getAverageMetricsForSensors(null, "week");
 		assertEquals(HttpStatus.BAD_REQUEST.value(), result.getStatusCode().value());
 		
+		when(weatherService.getAverageMetricsForSensors(null, "abcde")).thenReturn(new ResponseEntity<HashMap<String,Object>>(new HashMap<String, Object>() ,HttpStatus.BAD_REQUEST));
+		result =  weatherController.getAverageMetricsForSensors(null, "abcd");
+		assertEquals(HttpStatus.BAD_REQUEST.value(), result.getStatusCode().value());
+		
 	}
 	
 	

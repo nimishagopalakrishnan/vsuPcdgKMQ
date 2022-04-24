@@ -1,9 +1,12 @@
 package com.codeTest.weather.controller;
 
 import static com.codeTest.weather.model.Constants.MESSAGE;
+import static com.codeTest.weather.model.Constants.MONTH;
 import static com.codeTest.weather.model.Constants.TODAY;
+import static com.codeTest.weather.model.Constants.WEEK;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +47,10 @@ public class WeatherController {
 	public ResponseEntity<HashMap<String,Object>> getAverageMetricsForSensors(@RequestParam(required = true) ArrayList<Integer> sensorIds,
 			@RequestParam(defaultValue = TODAY) String dateRange
 			) {
-		
+		ArrayList<String> dateTypes = new ArrayList<String>(Arrays.asList(WEEK, MONTH, TODAY));
 		ResponseEntity<HashMap<String,Object>> responseStatus = null;
 		
-		if(sensorIds!=null && !sensorIds.isEmpty() && dateRange!=null && !dateRange.isEmpty()) {
+		if(sensorIds!=null && !sensorIds.isEmpty() && dateRange!=null && !dateRange.isEmpty() && dateTypes.contains(dateRange.toLowerCase())) {
 			responseStatus= weatherService.getAverageMetricsForSensors(sensorIds,dateRange.toLowerCase());
 		}
 		else {
